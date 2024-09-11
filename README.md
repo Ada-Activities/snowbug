@@ -135,7 +135,7 @@ Make note of your investigation, especially the 5 questions in the goal, and be 
 
 Error in how the word dictionary was being built. It should filter out any non-alpha letters from its representation, so that only letters the player can actually guess are tracked.
 
-```
+```py
 def build_word_dict(word):
    word_dict = {}
    for letter in word:
@@ -148,7 +148,7 @@ def build_word_dict(word):
 
 could resemble
 
-```
+```py
 def build_word_dict(word):
    word_dict = {}
    for letter in word:
@@ -166,7 +166,7 @@ Error in how the current guessed letters are displayed to the user. It currently
 
 Recall that non-alpha characters won't be added, so if a character is found that is not in the dict at all, we should add that character to the output. If the character is in the dict, we need to check the value for truthiness. True means the letter was guessed, so we should add it to the output. False indicates it has NOT been guessed, so use the underscore placeholder.
 
-```
+```py
 def build_game_board(word, word_dict):
    output_letters = []
    for elem in word:
@@ -185,7 +185,7 @@ def build_game_board(word, word_dict):
 
 could resemble
 
-```
+```py
 def build_game_board(word, word_dict):
    output_letters = []
    for elem in word:
@@ -206,7 +206,7 @@ def build_game_board(word, word_dict):
 
 This function has an off-by-one in how it is picking the lines from the snowman image.
 
-```
+```py
 def build_snowman_graphic(num_wrong_guesses):
    """This function extracts a portion of the
    snowman depending on the number of
@@ -223,7 +223,7 @@ def build_snowman_graphic(num_wrong_guesses):
 
 could resemble
 
-```
+```py
 def build_snowman_graphic(num_wrong_guesses):
    """This function extracts a portion of the
    snowman depending on the number of
@@ -242,7 +242,7 @@ def build_snowman_graphic(num_wrong_guesses):
 
 The related unit test wants this result to be sorted (to help users see which letters they've already guessed).
 
-```
+```py
 def add_wrong_letter(wrong_letters, letter):
    # track the wrong guesses in alphabetical order
    wrong_letters.append(letter)
@@ -250,7 +250,7 @@ def add_wrong_letter(wrong_letters, letter):
 
 could resemble
 
-```
+```py
 def add_wrong_letter(wrong_letters, letter):
    # track the wrong guesses in alphabetical order
    wrong_letters.append(letter)
@@ -261,7 +261,7 @@ def add_wrong_letter(wrong_letters, letter):
 
 The error message display logic in snowman has a variable name typo. Instead of the correct snowman_word, it prints snowman, a reference to the function itself, resulting in output like "Sorry, you lose! The word was <function snowman at 0x10687da60>" appearing in the terminal.
 
-```
+```py
        if len(wrong_letters) == SNOWMAN_MAX_WRONG_GUESSES:
            # show a losing message along with the full word
            print(f"Sorry, you lose! The word was {snowman}")
@@ -270,7 +270,7 @@ The error message display logic in snowman has a variable name typo. Instead of 
 
 could resemble
 
-```
+```py
        if len(wrong_letters) == SNOWMAN_MAX_WRONG_GUESSES:
            # show a losing message along with the full word
            print(f"Sorry, you lose! The word was {snowman_word}")
