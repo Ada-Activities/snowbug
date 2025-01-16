@@ -136,9 +136,9 @@ Make note of your investigation, especially the 5 questions in the goal, and be 
 Error in how the word dictionary was being built. It should filter out any non-alpha letters from its representation, so that only letters the player can actually guess are tracked.
 
 ```py
-def build_letter_status_dict(word):
+def build_letter_status_dict(snowman_word):
    word_dict = {}
-   for letter in word:
+   for letter in snowman_word:
        # keep track of any character a player might guess (alphabetic)
        word_dict[letter] = False
 
@@ -149,9 +149,9 @@ def build_letter_status_dict(word):
 could resemble
 
 ```py
-def build_letter_status_dict(word):
+def build_letter_status_dict(snowman_word):
    word_dict = {}
-   for letter in word:
+   for letter in snowman_word:
        # keep track of any character a player might guess (alphabetic)
        if letter.isalpha():
            word_dict[letter] = False
@@ -160,20 +160,20 @@ def build_letter_status_dict(word):
    return word_dict
 ```
 
-### build_game_board
+### generate_word_progress_string
 
 Error in how the current guessed letters are displayed to the user. It currently reverses the sense of checking for whether a letter is in the dict at all.
 
 Recall that non-alpha characters won't be added, so if a character is found that is not in the dict at all, we should add that character to the output. If the character is in the dict, we need to check the value for truthiness. True means the letter was guessed, so we should add it to the output. False indicates it has NOT been guessed, so use the underscore placeholder.
 
 ```py
-def build_game_board(word, word_dict):
+def generate_word_progress_string(snowman_word, correct_letter_guess_statuses):
    output_letters = []
-   for elem in word:
-       if elem in word_dict:
+   for elem in snowman_word:
+       if elem in correct_letter_guess_statuses:
            # automatically add any character a player wouldn't be able to guess
            output_letters += elem
-       elif word_dict[elem]:
+       elif correct_letter_guess_statuses[elem]:
            # add any letters the player has guessed
            output_letters += elem
        else:
@@ -186,13 +186,13 @@ def build_game_board(word, word_dict):
 could resemble
 
 ```py
-def build_game_board(word, word_dict):
+def generate_word_progress_string(snowman_word, correct_letter_guess_statuses):
    output_letters = []
-   for elem in word:
-       if elem not in word_dict:
+   for elem in snowman_word:
+       if elem not in correct_letter_guess_statuses:
            # automatically add any character a player wouldn't be able to guess
            output_letters += elem
-       elif word_dict[elem]:
+       elif correct_letter_guess_statuses[elem]:
            # add any letters the player has guessed
            output_letters += elem
        else:
@@ -207,7 +207,7 @@ def build_game_board(word, word_dict):
 This function has an off-by-one in how it is picking the lines from the snowman image.
 
 ```py
-def build_snowman_graphic(num_wrong_guesses):
+def build_snowman_graphic(wrong_guesses_count):
    """This function extracts a portion of the
    snowman depending on the number of
    wrong guesses and converts it to a single string
@@ -215,7 +215,7 @@ def build_snowman_graphic(num_wrong_guesses):
 
    # get the part of the snowman for the number of wrong guesses
    lines = []
-   for line_no in range(num_wrong_guesses - 1):
+   for line_no in range(wrong_guesses_count - 1):
        lines.append(SNOWMAN_IMAGE[line_no])
 
    return "\n".join(lines)
@@ -224,7 +224,7 @@ def build_snowman_graphic(num_wrong_guesses):
 could resemble
 
 ```py
-def build_snowman_graphic(num_wrong_guesses):
+def build_snowman_graphic(wrong_guesses_count):
    """This function extracts a portion of the
    snowman depending on the number of
    wrong guesses and converts it to a single string
@@ -232,7 +232,7 @@ def build_snowman_graphic(num_wrong_guesses):
 
    # get the part of the snowman for the number of wrong guesses
    lines = []
-   for line_no in range(num_wrong_guesses):
+   for line_no in range(wrong_guesses_count):
        lines.append(SNOWMAN_IMAGE[line_no])
 
    return "\n".join(lines)
@@ -243,18 +243,18 @@ def build_snowman_graphic(num_wrong_guesses):
 The related unit test wants this result to be sorted (to help users see which letters they've already guessed).
 
 ```py
-def add_wrong_letter(wrong_letters, letter):
+def add_wrong_letter(wrong_guesses_list, letter):
    # track the wrong guesses in alphabetical order
-   wrong_letters.append(letter)
+   wrong_guesses_list.append(letter)
 ```
 
 could resemble
 
 ```py
-def add_wrong_letter(wrong_letters, letter):
+def add_wrong_letter(wrong_guesses_list, letter):
    # track the wrong guesses in alphabetical order
-   wrong_letters.append(letter)
-   wrong_letters.sort()
+   wrong_guesses_list.append(letter)
+   wrong_guesses_list.sort()
 ```
 
 ### snowman
