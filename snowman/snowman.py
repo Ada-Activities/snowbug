@@ -82,6 +82,7 @@ def get_letter_from_user(correct_letter_guess_statuses, wrong_guesses_list):
 def build_letter_status_dict(snowman_word):
     letter_status_dict = {}
     for letter in snowman_word:
+        if letter.isalpha():
         # keep track of any character a player might guess (alphabetic)
             letter_status_dict[letter] = False
 
@@ -101,7 +102,7 @@ def is_word_guessed(correct_letter_guess_statuses):
 def generate_word_progress_string(snowman_word, correct_letter_guess_statuses):
     output_letters = []
     for elem in snowman_word:
-        if elem in correct_letter_guess_statuses:
+        if elem not in correct_letter_guess_statuses:
             # automatically add any character a player wouldn't be able to guess
             output_letters += elem
         elif correct_letter_guess_statuses[elem]:
